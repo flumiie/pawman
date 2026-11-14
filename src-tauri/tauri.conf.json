@@ -12,9 +12,9 @@
   "app": {
     "windows": [
       {
-        "title": "pawman",
-        "width": 800,
-        "height": 600
+        "title": "PawMan",
+        "width": 440,
+        "height": 800
       }
     ],
     "security": {

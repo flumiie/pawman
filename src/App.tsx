@@ -1,29 +1,46 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/core";
-import { Button } from "@/components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { ThemeProvider } from "@/components/theme-provider"
+import { SidebarConfigProvider } from "@/contexts/sidebar-context"
+import { Toaster } from "@/components/ui/toast"
+import { RootFallback, RootLayout } from "@/components/router/root-layout"
+import { routes } from "@/config/routes"
+import { useEffect } from "react"
+import { initGTM } from "@/utils/analytics"
 
-import "./App.css";
+// Get basename from environment (for deployment) or use empty string for development
+const basename = import.meta.env.VITE_BASENAME || ""
+
+const router = createBrowserRouter(
+  [
+    {
+      element: <RootLayout />,
+      HydrateFallback: RootFallback,
+      children: routes,
+    },
+  ],
+  { basename }
+)
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState<string | null>("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(greetMsg ? null : await invoke("greet", { name: "world" }));
-  }
+  // Initialize GTM on app load
+  useEffect(() => {
+    initGTM()
+  }, [])
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <div>{greetMsg}</div>
-      <Button
-        onClick={() => {
-          greet();
-        }}
-      >
-        {greetMsg ? "Hide" : "Click me"}
-      </Button>
+    <div
+      className="font-sans antialiased"
+      style={{ fontFamily: "var(--font-inter)" }}
+    >
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <SidebarConfigProvider>
+          <Toaster>
+            <RouterProvider router={router} />
+          </Toaster>
+        </SidebarConfigProvider>
+      </ThemeProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
