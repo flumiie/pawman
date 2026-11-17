@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Logo } from "./logo";
+import * as React from "react"
+import { X } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Logo } from "./logo"
 
 export function SidebarNotification() {
-  const [isVisible, setIsVisible] = React.useState(true);
+  const [isVisible, setIsVisible] = React.useState(true)
 
-  if (!isVisible) return null;
+  if (!isVisible) return null
 
   return (
     <Card className="mb-3 py-0 bg-muted/50 shadow-sm">
@@ -30,7 +30,7 @@ export function SidebarNotification() {
             <div>
               Welcome to{" "}
               <a
-                href="https://shadcnstore.com"
+                href="https://github.com/flumiie"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
@@ -42,7 +42,7 @@ export function SidebarNotification() {
           <p className="text-sm text-muted-foreground leading-relaxed">
             Explore our premium Shadcn UI{" "}
             <a
-              href="https://shadcnstore.com/blocks"
+              href="https://github.com/flumiie"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary underline"
@@ -54,5 +54,5 @@ export function SidebarNotification() {
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

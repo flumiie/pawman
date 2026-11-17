@@ -91,7 +91,7 @@ export function AboutSection() {
               nativeButton={false}
               render={
                 <a
-                  href="https://github.com/shadcnstore/shadcn-dashboard-landing-template"
+                  href="https://github.com/flumiie"
                   target="_blank"
                   rel="noopener noreferrer"
                 />

@@ -43,7 +43,7 @@ export function SiteHeader() {
               nativeButton={false}
               render={
                 <a
-                  href="https://shadcnstore.com/blocks"
+                  href="https://github.com/flumiie"
                   rel="noopener noreferrer"
                   target="_blank"
                 />
@@ -73,7 +73,7 @@ export function SiteHeader() {
               nativeButton={false}
               render={
                 <a
-                  href="https://github.com/shadcnstore/shadcn-dashboard-landing-template"
+                  href="https://github.com/flumiie"
                   rel="noopener noreferrer"
                   target="_blank"
                 />

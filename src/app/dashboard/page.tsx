@@ -1,7 +1,5 @@
 import { BaseLayout } from "@/components/layouts/base-layout"
-import { ChartAreaInteractive } from "./components/chart-area-interactive"
 import { DataTable } from "./components/data-table"
-import { SectionCards } from "./components/section-cards"
 
 import data from "./data/data.json"
 import pastPerformanceData from "./data/past-performance-data.json"
@@ -10,11 +8,7 @@ import focusDocumentsData from "./data/focus-documents-data.json"
 
 export default function Page() {
   return (
-    <BaseLayout title="Dashboard" description="Welcome to your admin dashboard">
-      <div className="flex flex-col @container/main px-4 lg:px-6 gap-6">
-        <SectionCards />
-        <ChartAreaInteractive />
-      </div>
+    <BaseLayout title="Group" description="[group name]">
       <div className="@container/main">
         <DataTable
           data={data}

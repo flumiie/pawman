@@ -11,12 +11,12 @@ export function SiteFooter() {
             <Heart className="size-4 fill-destructive text-destructive" />
             <span>by</span>
             <Link
-              to="https://shadcnstore.com"
+              to="https://github.com/flumiie"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-foreground hover:text-primary transition-colors"
             >
-              ShadcnStore Team
+              flumi
             </Link>
           </div>
           <p className="text-xs text-muted-foreground">

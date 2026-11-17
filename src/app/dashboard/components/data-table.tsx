@@ -29,7 +29,6 @@ import {
   ChevronsLeft,
   ChevronsRight,
   CircleCheckBig,
-  EllipsisVertical,
   GripVertical,
   Columns2,
   Loader,
@@ -80,8 +79,6 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -162,27 +159,8 @@ const columns: ColumnDef<DataTableFeatures, z.infer<typeof schema>>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "header",
-    header: "Header",
-    cell: ({ row }) => {
-      return <TableCellViewer item={row.original} />
-    },
-    enableHiding: false,
-  },
-  {
-    accessorKey: "type",
-    header: "Section Type",
-    cell: ({ row }) => (
-      <div className="w-32">
-        <Badge variant="outline" className="text-muted-foreground px-1.5">
-          {row.original.type}
-        </Badge>
-      </div>
-    ),
-  },
-  {
     accessorKey: "status",
-    header: "Status",
+    header: "Icon",
     cell: ({ row }) => (
       <Badge variant="outline" className="text-muted-foreground px-1.5">
         {row.original.status === "Done" ? (
@@ -195,8 +173,27 @@ const columns: ColumnDef<DataTableFeatures, z.infer<typeof schema>>[] = [
     ),
   },
   {
-    accessorKey: "target",
-    header: () => <div className="w-full">Target</div>,
+    accessorKey: "header",
+    header: "Name",
+    cell: ({ row }) => (
+      <div className="w-40">
+        <TableCellViewer item={row.original} />
+      </div>
+    ),
+    enableHiding: false,
+  },
+  {
+    accessorKey: "type",
+    header: "E-Mail",
+    cell: ({ row }) => (
+      <div className="w-40">
+        <TableCellViewer item={row.original} />
+      </div>
+    ),
+  },
+  {
+    accessorKey: "Edit",
+    header: () => <div className="w-full">Edit</div>,
     cell: ({ row }) => (
       <form
         onSubmit={(e) => {
@@ -209,7 +206,7 @@ const columns: ColumnDef<DataTableFeatures, z.infer<typeof schema>>[] = [
         }}
       >
         <Label htmlFor={`${row.original.id}-target`} className="sr-only">
-          Target
+          Edit
         </Label>
         <Input
           className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent shadow-none focus-visible:border dark:bg-transparent"
@@ -220,8 +217,8 @@ const columns: ColumnDef<DataTableFeatures, z.infer<typeof schema>>[] = [
     ),
   },
   {
-    accessorKey: "limit",
-    header: () => <div className="w-full">Limit</div>,
+    accessorKey: "delete",
+    header: () => <div className="w-full">Delete</div>,
     cell: ({ row }) => (
       <form
         onSubmit={(e) => {
@@ -233,81 +230,15 @@ const columns: ColumnDef<DataTableFeatures, z.infer<typeof schema>>[] = [
           })
         }}
       >
-        <Label htmlFor={`${row.original.id}-limit`} className="sr-only">
-          Limit
+        <Label htmlFor={`${row.original.id}-delete`} className="sr-only">
+          Delete
         </Label>
         <Input
           className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent shadow-none focus-visible:border dark:bg-transparent"
           defaultValue={row.original.limit}
-          id={`${row.original.id}-limit`}
+          id={`${row.original.id}-delete`}
         />
       </form>
-    ),
-  },
-  {
-    accessorKey: "reviewer",
-    header: "Reviewer",
-    cell: ({ row }) => {
-      const isAssigned = row.original.reviewer !== "Assign reviewer"
-
-      if (isAssigned) {
-        return row.original.reviewer
-      }
-
-      return (
-        <>
-          <Label htmlFor={`${row.original.id}-reviewer`} className="sr-only">
-            Reviewer
-          </Label>
-          <Select>
-            <SelectTrigger
-              className="w-38 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate cursor-pointer"
-              size="sm"
-              id={`${row.original.id}-reviewer`}
-            >
-              <SelectValue placeholder="Assign reviewer" />
-            </SelectTrigger>
-            <SelectContent align="end">
-              <SelectGroup>
-                <SelectItem value="Eddie Lake">Eddie Lake</SelectItem>
-                <SelectItem value="Jamik Tashpulatov">
-                  Jamik Tashpulatov
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </>
-      )
-    },
-  },
-  {
-    id: "actions",
-    cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button
-              variant="ghost"
-              className="data-popup-open:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-              size="icon"
-            />
-          }
-        >
-          <EllipsisVertical data-icon="inline-start" />
-          <span className="sr-only">Open menu</span>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-32">
-          <DropdownMenuGroup>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Make a copy</DropdownMenuItem>
-            <DropdownMenuItem>Favorite</DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
     ),
   },
 ]
@@ -328,6 +259,7 @@ function DraggableRow({
       ref={setNodeRef}
       className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
       style={{
+        accentColor: "#ff0000",
         transform: CSS.Transform.toString(transform),
         transition: transition,
       }}
@@ -989,7 +921,7 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
           />
         }
       >
-        {item.header}
+        {`${item.header.substr(0, 21)}${item.header.length >= 21 ? " ..." : ""}`}
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="gap-1">

@@ -133,7 +133,7 @@ export function FeaturesSection() {
             <div className="flex flex-col sm:flex-row gap-4 pe-4 pt-2">
               <Button size="lg" className="cursor-pointer">
                 <a
-                  href="https://shadcnstore.com/templates"
+                  href="https://github.com/flumiie"
                   className="flex items-center"
                 >
                   Browse Templates
@@ -141,7 +141,7 @@ export function FeaturesSection() {
                 </a>
               </Button>
               <Button size="lg" variant="outline" className="cursor-pointer">
-                <a href="https://shadcnstore.com/blocks">View Components</a>
+                <a href="https://github.com/flumiie">View Components</a>
               </Button>
             </div>
           </div>
@@ -195,7 +195,7 @@ export function FeaturesSection() {
               </Button>
               <Button size="lg" variant="outline" className="cursor-pointer">
                 <a
-                  href="https://github.com/shadcnstore/shadcn-dashboard-landing-template"
+                  href="https://github.com/flumiie"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

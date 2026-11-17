@@ -84,7 +84,7 @@ export function LandingNavbar() {
         {/* Logo */}
         <div className="flex items-center gap-2">
           <a
-            href="https://shadcnstore.com"
+            href="https://github.com/flumiie"
             className="flex items-center gap-2 cursor-pointer"
             target="_blank"
             rel="noopener noreferrer"
@@ -138,7 +138,7 @@ export function LandingNavbar() {
             nativeButton={false}
             render={
               <a
-                href="https://github.com/shadcnstore/shadcn-dashboard-landing-template"
+                href="https://github.com/flumiie"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Repository"
@@ -230,7 +230,7 @@ export function LandingNavbar() {
                       nativeButton={false}
                       render={
                         <a
-                          href="https://github.com/shadcnstore/shadcn-dashboard-landing-template"
+                          href="https://github.com/flumiie"
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label="GitHub Repository"

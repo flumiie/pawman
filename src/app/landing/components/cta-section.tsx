@@ -25,9 +25,15 @@ export function CTASection() {
                     <div className="size-2 rounded-full bg-success" />
                     150+ Blocks
                   </span>
-                  <Separator orientation="vertical" className="h-4! data-vertical:self-center" />
+                  <Separator
+                    orientation="vertical"
+                    className="h-4! data-vertical:self-center"
+                  />
                   <span>25K+ Downloads</span>
-                  <Separator orientation="vertical" className="h-4! data-vertical:self-center" />
+                  <Separator
+                    orientation="vertical"
+                    className="h-4! data-vertical:self-center"
+                  />
                   <span>4.9★ Rating</span>
                 </div>
               </div>
@@ -62,7 +68,7 @@ export function CTASection() {
                   nativeButton={false}
                   render={
                     <a
-                      href="https://shadcnstore.com/blocks"
+                      href="https://github.com/flumiie"
                       target="_blank"
                       rel="noopener noreferrer"
                     />
@@ -78,7 +84,7 @@ export function CTASection() {
                   nativeButton={false}
                   render={
                     <a
-                      href="https://github.com/shadcnstore/shadcn-dashboard-landing-template"
+                      href="https://github.com/flumiie"
                       target="_blank"
                       rel="noopener noreferrer"
                     />
