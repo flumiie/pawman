@@ -11,17 +11,14 @@ function page(load: () => Promise<{ default: ComponentType }>) {
 }
 
 export const routes: RouteObject[] = [
-  // Use relative path "dashboard" instead of "/dashboard" for basename compatibility
   { path: "/", element: <Navigate to="dashboard" replace /> },
   // Landing Page
   { path: "/landing", lazy: page(() => import("@/app/landing/page")) },
   // Dashboard Routes
-  { path: "/dashboard", lazy: page(() => import("@/app/dashboard/page")) },
-  { path: "/dashboard-2", lazy: page(() => import("@/app/dashboard-2/page")) },
+  { path: "/passwords", lazy: page(() => import("@/app/passwords/page")) },
   // Application Routes
   { path: "/mail", lazy: page(() => import("@/app/mail/page")) },
   { path: "/tasks", lazy: page(() => import("@/app/tasks/page")) },
-  { path: "/chat", lazy: page(() => import("@/app/chat/page")) },
   { path: "/calendar", lazy: page(() => import("@/app/calendar/page")) },
   // Content Pages
   { path: "/users", lazy: page(() => import("@/app/users/page")) },

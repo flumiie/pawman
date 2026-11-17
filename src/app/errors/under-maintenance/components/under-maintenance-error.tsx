@@ -20,7 +20,7 @@ export function UnderMaintenanceError() {
         <div className="mt-6 flex items-center justify-center gap-4 md:mt-8">
           <Button
             className="cursor-pointer"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/passwords")}
           >
             Go Back Home
           </Button>

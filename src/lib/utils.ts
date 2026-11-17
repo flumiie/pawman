@@ -13,11 +13,20 @@ export function assetUrl(path: string): string {
 
 /**
  * Get the correct URL path with basename prefix for internal navigation
- * @param path - The internal path (e.g., "/dashboard", "/auth/sign-in")
+ * @param path - The internal path (e.g., "/passwords", "/auth/sign-in")
  * @returns The full path with basename prefix
  */
 export function getAppUrl(path: string): string {
   const basename = import.meta.env.VITE_BASENAME || ""
   const cleanPath = path.startsWith("/") ? path : `/${path}`
   return basename + cleanPath
+}
+
+export async function encrypt(text: string) {
+  // UTF-8 > hash > arr buff to arr > bytes to hex
+  const msgBuffer = new TextEncoder().encode(text)
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
+  return hashHex
 }

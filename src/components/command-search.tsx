@@ -51,23 +51,11 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
   const searchItems: SearchItem[] = [
     // Dashboards
     {
-      title: "Dashboard 1",
-      url: "/dashboard",
-      group: "Dashboards",
+      title: "Password",
+      url: "/passwords",
+      group: "Passwords",
       icon: LayoutDashboard,
     },
-    {
-      title: "Dashboard 2",
-      url: "/dashboard-2",
-      group: "Dashboards",
-      icon: LayoutPanelLeft,
-    },
-
-    // Apps
-    { title: "Mail", url: "/mail", group: "Apps", icon: Mail },
-    { title: "Tasks", url: "/tasks", group: "Apps", icon: CheckSquare },
-    { title: "Chat", url: "/chat", group: "Apps", icon: MessageCircle },
-    { title: "Calendar", url: "/calendar", group: "Apps", icon: Calendar },
 
     // Auth Pages
     {
