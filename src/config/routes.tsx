@@ -11,11 +11,8 @@ function page(load: () => Promise<{ default: ComponentType }>) {
 }
 
 export const routes: RouteObject[] = [
-  { path: "/", element: <Navigate to="dashboard" replace /> },
-  // Landing Page
-  { path: "/landing", lazy: page(() => import("@/app/landing/page")) },
-  // Dashboard Routes
-  { path: "/passwords", lazy: page(() => import("@/app/passwords/page")) },
+  // { path: "/", element: <Navigate to="passwords" replace /> },
+  { path: "/", lazy: page(() => import("@/app/passwords/page")) },
   // Application Routes
   { path: "/mail", lazy: page(() => import("@/app/mail/page")) },
   { path: "/tasks", lazy: page(() => import("@/app/tasks/page")) },
