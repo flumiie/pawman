@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { useAuth } from "@/hooks/use-auth"
-import { Text } from "lucide-react"
 
 export function LoginForm({
   className,
@@ -18,15 +17,9 @@ export function LoginForm({
     password: string | null
   }>()
 
-  const handleLogin = async (props: {
-    user: any
-    e?: React.SubmitEvent<HTMLFormElement>
-  }) => {
-    props.e?.preventDefault()
-    // Here you would usually send a request to your backend to authenticate the user
-    // For the sake of this example, we're using a mock authentication
-    if (props.user?.username && props.user?.password && data?.login) {
-      await data.login(props.user.username)
+  const handleLogin = async () => {
+    if (user?.username && user?.password && data?.login) {
+      await data.login(user.username)
     } else {
       alert("Invalid username or password")
     }
@@ -35,12 +28,14 @@ export function LoginForm({
   return (
     <form
       className={cn("flex flex-col gap-6", className)}
-      onSubmit={() => {
+      onSubmit={(e) => {
+        alert("test")
+        e.preventDefault()
         setUser({
           username: user?.username ?? null,
           password: user?.password ?? null,
         })
-        // handleLogin({ user })
+        handleLogin()
       }}
       {...props}
     >
@@ -49,19 +44,28 @@ export function LoginForm({
         <p className="text-muted-foreground text-sm text-balance">
           Enter your account details to unlock your secrets
         </p>
+
+        <></>
+        <p>Test fields below: </p>
+        <FieldLabel>
+          <b>Username:</b> {user?.username ?? "null"}
+        </FieldLabel>
+        <FieldLabel>
+          <b>Password:</b> {user?.password ?? "null"}
+        </FieldLabel>
+        <></>
       </div>
       <div className="grid gap-6">
         <Field>
-          <Text>{user?.username}</Text>
           <FieldLabel htmlFor="email">Email</FieldLabel>
           <Input
             id="email"
             type="email"
             placeholder="user@provider.com"
             required
-            onBlur={(e) => {
+            onChange={(e) => {
               setUser({
-                username: e.nativeEvent?.text,
+                username: user?.username ?? null,
                 password: user?.password ?? null,
               })
             }}

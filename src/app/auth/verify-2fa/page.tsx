@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useAuth } from "@/hooks/use-auth"
 
-export const Verify2FA = () => {
+export default function Verify2FA() {
   const navigate = useNavigate()
   const data = useAuth()
   const [code, setCode] = useState("")
