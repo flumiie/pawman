@@ -6,6 +6,7 @@ import { RootFallback, RootLayout } from "@/components/router/root-layout"
 import { routes } from "@/config/routes"
 import { useEffect } from "react"
 import { initGTM } from "@/utils/analytics"
+import { AuthProvider } from "./components/auth-provider"
 
 // Get basename from environment (for deployment) or use empty string for development
 const basename = import.meta.env.VITE_BASENAME || ""
@@ -13,6 +14,7 @@ const basename = import.meta.env.VITE_BASENAME || ""
 const router = createBrowserRouter(
   [
     {
+      Component: AuthProvider,
       element: <RootLayout />,
       HydrateFallback: RootFallback,
       children: routes,

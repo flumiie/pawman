@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 
-export function SignupForm2({
+export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
@@ -81,7 +81,7 @@ export function SignupForm2({
       <div className="text-center text-sm">
         Already have an account?{" "}
         <a
-          href="/templates/dashboard/shadcn-dashboard-landing-template/auth/sign-in-2"
+          href="/templates/dashboard/shadcn-dashboard-landing-template/login"
           className="underline underline-offset-4"
         >
           Sign in

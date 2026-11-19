@@ -4,16 +4,45 @@ import { cn } from "@/lib/utils"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useState } from "react"
+import { useAuth } from "@/hooks/use-auth"
+import { Text } from "lucide-react"
 
-export function LoginForm2({
+export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const data = useAuth()
+  const [user, setUser] = useState<{
+    username: string | null
+    password: string | null
+  }>()
+
+  const handleLogin = async (props: {
+    user: any
+    e?: React.SubmitEvent<HTMLFormElement>
+  }) => {
+    props.e?.preventDefault()
+    // Here you would usually send a request to your backend to authenticate the user
+    // For the sake of this example, we're using a mock authentication
+    if (props.user?.username && props.user?.password && data?.login) {
+      await data.login(props.user.username)
+    } else {
+      alert("Invalid username or password")
+    }
+  }
+
   return (
     <form
       className={cn("flex flex-col gap-6", className)}
+      onSubmit={() => {
+        setUser({
+          username: user?.username ?? null,
+          password: user?.password ?? null,
+        })
+        // handleLogin({ user })
+      }}
       {...props}
-      action="/passwords"
     >
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Login</h1>
@@ -23,12 +52,19 @@ export function LoginForm2({
       </div>
       <div className="grid gap-6">
         <Field>
+          <Text>{user?.username}</Text>
           <FieldLabel htmlFor="email">Email</FieldLabel>
           <Input
             id="email"
             type="email"
             placeholder="user@provider.com"
             required
+            onBlur={(e) => {
+              setUser({
+                username: e.nativeEvent?.text,
+                password: user?.password ?? null,
+              })
+            }}
           />
         </Field>
         <Field>
@@ -42,10 +78,16 @@ export function LoginForm2({
             </a>
           </div>
           <Input
+            ref="password"
             id="password"
             type="password"
-            defaultValue="password"
             required
+            onBlur={(e) => {
+              setUser({
+                username: user?.username ?? null,
+                password: e.nativeEvent?.text,
+              })
+            }}
           />
         </Field>
         <Button type="submit" className="w-full cursor-pointer">

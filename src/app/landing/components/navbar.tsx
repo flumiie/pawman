@@ -166,7 +166,7 @@ export function LandingNavbar() {
             variant="ghost"
             className="cursor-pointer"
             nativeButton={false}
-            render={<a href={getAppUrl("/auth/sign-in")} />}
+            render={<a href={getAppUrl("/login")} />}
           >
             Sign In
           </Button>
@@ -342,7 +342,7 @@ export function LandingNavbar() {
                       size="lg"
                       className="cursor-pointer"
                       nativeButton={false}
-                      render={<a href={getAppUrl("/auth/sign-in")} />}
+                      render={<a href={getAppUrl("/login")} />}
                     >
                       Sign In
                     </Button>

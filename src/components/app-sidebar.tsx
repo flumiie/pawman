@@ -34,7 +34,7 @@ const data = {
         },
         {
           title: "Passwords",
-          url: "/auth/sign-in",
+          url: "/login",
           icon: SquareAsterisk,
         },
         {
