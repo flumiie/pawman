@@ -1,5 +1,5 @@
 import type { ComponentType } from "react"
-import { Navigate, type RouteObject } from "react-router-dom"
+import { type RouteObject } from "react-router-dom"
 
 /**
  * Every page is code-split. With the data router, a route's code is loaded
@@ -13,10 +13,6 @@ function page(load: () => Promise<{ default: ComponentType }>) {
 export const routes: RouteObject[] = [
   // { path: "/", element: <Navigate to="passwords" replace /> },
   { path: "/", lazy: page(() => import("@/app/passwords/page")) },
-  // Application Routes
-  { path: "/mail", lazy: page(() => import("@/app/mail/page")) },
-  { path: "/tasks", lazy: page(() => import("@/app/tasks/page")) },
-  { path: "/calendar", lazy: page(() => import("@/app/calendar/page")) },
   // Content Pages
   { path: "/users", lazy: page(() => import("@/app/users/page")) },
   { path: "/faqs", lazy: page(() => import("@/app/faqs/page")) },
@@ -27,36 +23,12 @@ export const routes: RouteObject[] = [
     lazy: page(() => import("@/app/auth/sign-in/page")),
   },
   {
-    path: "/auth/sign-in-2",
-    lazy: page(() => import("@/app/auth/sign-in-2/page")),
-  },
-  {
-    path: "/auth/sign-in-3",
-    lazy: page(() => import("@/app/auth/sign-in-3/page")),
-  },
-  {
     path: "/auth/sign-up",
     lazy: page(() => import("@/app/auth/sign-up/page")),
   },
   {
-    path: "/auth/sign-up-2",
-    lazy: page(() => import("@/app/auth/sign-up-2/page")),
-  },
-  {
-    path: "/auth/sign-up-3",
-    lazy: page(() => import("@/app/auth/sign-up-3/page")),
-  },
-  {
     path: "/auth/forgot-password",
     lazy: page(() => import("@/app/auth/forgot-password/page")),
-  },
-  {
-    path: "/auth/forgot-password-2",
-    lazy: page(() => import("@/app/auth/forgot-password-2/page")),
-  },
-  {
-    path: "/auth/forgot-password-3",
-    lazy: page(() => import("@/app/auth/forgot-password-3/page")),
   },
   // Error Pages
   {

@@ -3,12 +3,7 @@
 import { useNavigate } from "react-router-dom"
 import {
   Search,
-  LayoutPanelLeft,
   LayoutDashboard,
-  Mail,
-  CheckSquare,
-  MessageCircle,
-  Calendar,
   Shield,
   AlertTriangle,
   Settings,
@@ -19,6 +14,7 @@ import {
   Link2,
   Palette,
   type LucideIcon,
+  SettingsIcon,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -51,46 +47,34 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
   const searchItems: SearchItem[] = [
     // Dashboards
     {
-      title: "Password",
-      url: "/passwords",
-      group: "Passwords",
+      title: "Passwords",
+      url: "/",
+      group: "",
       icon: LayoutDashboard,
+    },
+    {
+      title: "Settings",
+      url: "/settings/user",
+      group: "",
+      icon: SettingsIcon,
     },
 
     // Auth Pages
     {
-      title: "Sign In 1",
+      title: "Sign In",
       url: "/auth/sign-in",
       group: "Auth Pages",
       icon: Shield,
     },
     {
-      title: "Sign In 2",
-      url: "/auth/sign-in-2",
-      group: "Auth Pages",
-      icon: Shield,
-    },
-    {
-      title: "Sign Up 1",
+      title: "Sign Up",
       url: "/auth/sign-up",
       group: "Auth Pages",
       icon: Shield,
     },
     {
-      title: "Sign Up 2",
-      url: "/auth/sign-up-2",
-      group: "Auth Pages",
-      icon: Shield,
-    },
-    {
-      title: "Forgot Password 1",
+      title: "Forgot Password",
       url: "/auth/forgot-password",
-      group: "Auth Pages",
-      icon: Shield,
-    },
-    {
-      title: "Forgot Password 2",
-      url: "/auth/forgot-password-2",
       group: "Auth Pages",
       icon: Shield,
     },

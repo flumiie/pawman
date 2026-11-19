@@ -29,7 +29,12 @@ const data = {
       items: [
         {
           title: "Passwords",
-          url: "/passwords",
+          url: "/",
+          icon: SquareAsterisk,
+        },
+        {
+          title: "Passwords",
+          url: "/auth/sign-in",
           icon: SquareAsterisk,
         },
         {
@@ -79,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <Logo size={24} className="text-current" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">ShadcnStore</span>
+                <span className="truncate font-medium">PawMan</span>
                 <span className="truncate text-xs">Admin Dashboard</span>
               </div>
             </SidebarMenuButton>

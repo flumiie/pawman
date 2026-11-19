@@ -23,7 +23,7 @@ export function FeaturesGrid({ features }: FeaturesGridProps) {
           <Card className="relative h-full overflow-hidden transition-all hover:shadow-md">
             <CardHeader>
               <div className="mb-2 flex size-12 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
-                <Icon className="size-5" aria-hidden="true" />
+                <Icon icon="" />
               </div>
               <CardTitle className="text-lg">{title}</CardTitle>
               <CardDescription>{description}</CardDescription>

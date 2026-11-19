@@ -6,6 +6,7 @@ import {
   ItemActions,
 } from "@/components/ui/item"
 import { Button } from "@base-ui/react"
+import { ChevronRightIcon } from "lucide-react"
 
 export default function List(props: {
   data: any
@@ -22,7 +23,7 @@ export default function List(props: {
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
-            Action
+            <ChevronRightIcon className="size-5" aria-hidden="true" />
           </Button>
         </ItemActions>
       </Item>
