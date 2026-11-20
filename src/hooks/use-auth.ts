@@ -1,8 +1,11 @@
 import { createContext, useContext } from "react"
 
 export interface AuthData {
-  user: string
-  login(data: string): Promise<void>
+  /** Current logged-in email address (lowercased), or null when unauthenticated. */
+  user: string | null
+  /** Persisted e-mail used for the current 2FA session. */
+  email: string | null
+  login(email: string): Promise<void>
   logout(): void
   is2FAVerified: boolean
   verify2FACode(code: string): Promise<boolean>

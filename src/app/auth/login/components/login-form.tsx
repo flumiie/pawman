@@ -8,21 +8,18 @@ import { useState } from "react"
 import { useAuth } from "@/hooks/use-auth"
 import { Form } from "@base-ui/react/form"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
+type UserState = { username: string | null; password: string | null; email: string | null }
+
+export function LoginForm({ className, ...props }: React.ComponentProps<"form">) {
   const data = useAuth()
-  const [user, setUser] = useState<{
-    username: string | null
-    password: string | null
-  }>()
+  const [user, setUser] = useState<UserState>({ username: null, password: null, email: null })
 
   const handleLogin = async () => {
-    if (user?.username && user?.password && data?.login) {
-      await data.login(user.username)
+    // The input serves as both the username label *and* the contact address.
+    if (user?.email && user?.password && data?.login) {
+      await data.login(user.email)
     } else {
-      alert("Invalid username or password")
+      alert("Please enter your email and password.")
     }
   }
 
@@ -43,19 +40,17 @@ export function LoginForm({
       </div>
       <div className="grid gap-6">
         <Field>
-          <FieldLabel htmlFor="username">Email or Username</FieldLabel>
+          <FieldLabel htmlFor="email">Email address</FieldLabel>
           <Input
-            id="username"
-            name="username"
-            type="username"
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
             placeholder="user@provider.com"
             required
-            onChange={(e) => {
-              setUser({
-                username: e.target.value.length ? e.target.value : null,
-                password: user?.password ?? null,
-              })
-            }}
+            onChange={(e) =>
+              setUser({ username: e.target.value, email: e.target.value, password: user.password ?? null })
+            }
           />
         </Field>
         <Field>
@@ -72,13 +67,11 @@ export function LoginForm({
             id="password"
             name="password"
             type="password"
+            autoComplete="current-password"
             required
-            onChange={(e) => {
-              setUser({
-                username: user?.username ?? null,
-                password: e.target.value.length ? e.target.value : null,
-              })
-            }}
+            onChange={(e) =>
+              setUser({ username: user.username ?? null, email: user.email ?? null, password: e.target.value })
+            }
           />
         </Field>
         <Button type="submit" className="w-full cursor-pointer">

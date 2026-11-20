@@ -1,37 +1,58 @@
 import { useMemo, useState } from "react"
 import { useNavigate, Outlet } from "react-router-dom"
+import { invoke } from "@tauri-apps/api/core"
 import { AuthContext } from "../hooks/use-auth"
 import { useLocalStorage } from "../hooks/use-local-storage"
+import { flushCodes } from "../commands"
 
 export const AuthProvider = () => {
-  const [user, setUser] = useLocalStorage<string | null>("user", null)
+  // user keeps the e-mail of the authenticated session so we can re-use it
+  // on reload without forcing a fresh login.
+  const [user, setUser] = useLocalStorage<string | null>("pawman_user", null)
   const [is2FAVerified, setIs2FAVerified] = useState(false)
   const navigate = useNavigate()
 
   const value = useMemo(() => {
-    // call this function when you want to authenticate the user
-    const login = async (data: string) => {
-      setUser(data)
+    const login = async (email: string) => {
+      if (!email || !email.includes("@")) {
+        alert("Please enter a valid email address.")
+        return
+      }
+      try {
+        await invoke<boolean>("send_2fa_code", { email })
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err)
+        alert(`Failed to send verification code: ${msg}`)
+        return
+      }
+      setUser(email.toLowerCase())
       navigate("/verify-2fa")
     }
 
-    // call this function to sign out logged in user
     const logout = () => {
+      flushCodes()
       setUser(null)
+      setIs2FAVerified(false)
       navigate("/login", { replace: true })
     }
 
     const verify2FACode = async (code: string) => {
-      // Mock verification logic
-      if (code === "0000") {
-        setIs2FAVerified(true)
-        navigate("/secret") // Navigate to a protected route after successful 2FA
-        return true
+      if (!user) return false
+      try {
+        const ok = await invoke<boolean>("verify_2fa_code", { email: user, code })
+        if (ok) {
+          setIs2FAVerified(true)
+          navigate("/secret")
+        }
+        return ok
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err)
+        alert(`Verification failed: ${msg}`)
+        return false
       }
-      return false
     }
 
-    return { user, login, logout, is2FAVerified, verify2FACode }
+    return { user, email: user, login, logout, is2FAVerified, verify2FACode }
   }, [user, navigate, setUser, is2FAVerified])
 
   return (
