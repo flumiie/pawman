@@ -1,31 +1,49 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useAuth } from "@/hooks/use-auth"
+import { Form } from "@base-ui/react/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 export default function Verify2FA() {
   const navigate = useNavigate()
   const data = useAuth()
   const [code, setCode] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const isValid = await data?.verify2FACode(code)
-    if (isValid) {
-      navigate("/secret")
-    } else {
-      alert("Invalid code. Please try again.")
+  const handleSubmit = async () => {
+    if (loading) return
+    setLoading(true)
+    try {
+      const isValid = await data?.verify2FACode(code)
+      if (!isValid) {
+        setCode("")
+      }
+      // Navigation to /secret is handled inside verify2FACode
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSubmit()
+      }}
+    >
+      <Button type="button" onClick={() => navigate(-1)}>
+        Back
+      </Button>
+      <Input
         type="text"
         value={code}
         onChange={(e) => setCode(e.target.value)}
         placeholder="Enter verification code"
       />
-      <button type="submit">Verify</button>
-    </form>
+      <Button type="submit" disabled={loading}>
+        {loading ? "Verifying…" : "Verify"}
+      </Button>
+    </Form>
   )
 }

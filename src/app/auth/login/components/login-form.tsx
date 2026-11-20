@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { useAuth } from "@/hooks/use-auth"
+import { Form } from "@base-ui/react/form"
 
 export function LoginForm({
   className,
@@ -26,15 +27,10 @@ export function LoginForm({
   }
 
   return (
-    <form
+    <Form
       className={cn("flex flex-col gap-6", className)}
       onSubmit={(e) => {
-        alert("test")
         e.preventDefault()
-        setUser({
-          username: user?.username ?? null,
-          password: user?.password ?? null,
-        })
         handleLogin()
       }}
       {...props}
@@ -44,28 +40,19 @@ export function LoginForm({
         <p className="text-muted-foreground text-sm text-balance">
           Enter your account details to unlock your secrets
         </p>
-
-        <></>
-        <p>Test fields below: </p>
-        <FieldLabel>
-          <b>Username:</b> {user?.username ?? "null"}
-        </FieldLabel>
-        <FieldLabel>
-          <b>Password:</b> {user?.password ?? "null"}
-        </FieldLabel>
-        <></>
       </div>
       <div className="grid gap-6">
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel htmlFor="username">Email or Username</FieldLabel>
           <Input
-            id="email"
-            type="email"
+            id="username"
+            name="username"
+            type="username"
             placeholder="user@provider.com"
             required
             onChange={(e) => {
               setUser({
-                username: user?.username ?? null,
+                username: e.target.value.length ? e.target.value : null,
                 password: user?.password ?? null,
               })
             }}
@@ -82,14 +69,14 @@ export function LoginForm({
             </a>
           </div>
           <Input
-            ref="password"
             id="password"
+            name="password"
             type="password"
             required
-            onBlur={(e) => {
+            onChange={(e) => {
               setUser({
                 username: user?.username ?? null,
-                password: e.nativeEvent?.text,
+                password: e.target.value.length ? e.target.value : null,
               })
             }}
           />
@@ -130,6 +117,6 @@ export function LoginForm({
           Sign up
         </a>
       </div>
-    </form>
+    </Form>
   )
 }
