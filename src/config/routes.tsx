@@ -1,4 +1,3 @@
-import { Secret } from "@/components/secret"
 import { ProtectedLayout } from "@/app/protected-layout/page"
 import { ProtectedRoute } from "@/components/protected-route"
 import { RootRedirect } from "@/components/root-redirect"
@@ -20,11 +19,7 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, Component: RootRedirect },
       { path: "login", lazy: page(() => import("@/app/auth/login/page")) },
-      {
-        path: "verify-2fa",
-        lazy: page(() => import("@/app/auth/verify-2fa/page")),
-      },
-      { path: "secret", Component: Secret },
+      { path: "sign-up", lazy: page(() => import("@/app/auth/sign-up/page")) },
     ],
   },
   {

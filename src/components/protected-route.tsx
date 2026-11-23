@@ -11,10 +11,8 @@ export const ProtectedRoute = () => {
       navigate("/login")
       return
     }
-    if (!data?.is2FAVerified) {
-      navigate("/verify-2fa")
-      return
-    }
+    navigate("/main/passwords")
+    return
   })
   return <Outlet />
 }

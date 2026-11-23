@@ -1,5 +1,11 @@
-/** Expose Rust-side helpers that don't need Tauri state to the React layer. */
+/** Expose Rust-side auth commands to the React layer. */
 import { invoke } from "@tauri-apps/api/core"
 
-/** Erase every pending in-process 2FA code — called on logout. */
-export const flushCodes = () => void invoke<void>("flush_codes")
+export const registerUser = (identifier: string, password: string): Promise<boolean> =>
+  invoke<boolean>("register_user", { identifier, password })
+
+export const loginUser = (identifier: string, password: string): Promise<boolean> =>
+  invoke<boolean>("login_user", { identifier, password })
+
+export const clearSession = (): Promise<void> =>
+  invoke<void>("clear_session")

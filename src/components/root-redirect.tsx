@@ -4,17 +4,11 @@ import { useAuth } from "../hooks/use-auth"
 
 export const RootRedirect = () => {
   const navigate = useNavigate()
-  const { user, is2FAVerified } = useAuth() ?? {}
+  const { user } = useAuth() ?? {}
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login", { replace: true })
-    } else if (!is2FAVerified) {
-      navigate("/verify-2fa", { replace: true })
-    } else {
-      navigate("/main/passwords", { replace: true })
-    }
-  }, [user, is2FAVerified, navigate])
+    navigate(user ? "/main/passwords" : "/login", { replace: true })
+  }, [user, navigate])
 
   return null
 }

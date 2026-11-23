@@ -1,8 +1,11 @@
 import { BaseLayout } from "@/components/layouts/base-layout"
-
+import { Button } from "@/components/ui/button"
+import { LogOut } from "lucide-react"
+import { useAuth } from "@/hooks/use-auth"
 import List from "./components/list"
 
 export default function Page() {
+  const auth = useAuth()
   const data = [
     { id: 1, name: "A", username: "a@a.com" },
     { id: 2, name: "B", username: "b@b.com" },
@@ -24,7 +27,13 @@ export default function Page() {
 
   return (
     <BaseLayout title="All">
-      <div className="@container/main">
+      <div className="@container/main flex flex-col gap-4">
+        <div className="flex justify-end px-4 lg:px-6">
+          <Button variant="outline" size="sm" onClick={() => auth?.logout()}>
+            <LogOut className="size-3.5" />
+            Log out
+          </Button>
+        </div>
         <List data={data} />
       </div>
     </BaseLayout>

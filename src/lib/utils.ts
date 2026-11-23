@@ -30,3 +30,5 @@ export async function encrypt(text: string) {
   const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
   return hashHex
 }
+
+export const emailFormat = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
