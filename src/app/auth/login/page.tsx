@@ -13,7 +13,7 @@ export default function LoginPage() {
           <span className="w-8"></span>
           <span className="flex items-center gap-2 font-medium">
             <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
-              <Logo size={24} />
+              <Logo size={32} />
             </div>
             PawMan
           </span>

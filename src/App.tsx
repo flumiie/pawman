@@ -7,6 +7,7 @@ import { routes } from "@/config/routes"
 import { useEffect } from "react"
 import { initGTM } from "@/utils/analytics"
 import { AuthProvider } from "./components/auth-provider"
+import { Alert } from "./components/ui/alert"
 
 // Get basename from environment (for deployment) or use empty string for development
 const basename = import.meta.env.VITE_BASENAME || ""
@@ -29,11 +30,21 @@ function App() {
     initGTM()
   }, [])
 
+  const alert = {
+    text: "",
+    shown: false,
+  }
+
   return (
     <div
       className="font-sans antialiased"
       style={{ fontFamily: "var(--font-inter)" }}
     >
+      {alert.shown ? (
+        <div className="p-6" style={{ position: "absolute", width: "100%" }}>
+          <Alert>{alert.text}</Alert>
+        </div>
+      ) : null}
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <SidebarConfigProvider>
           <Toaster>

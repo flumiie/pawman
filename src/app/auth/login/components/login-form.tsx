@@ -22,10 +22,11 @@ export function LoginForm({
   const [loading, setLoading] = useState(false)
 
   const handleLogin = async () => {
-    if (!form.identifier || !form.password || !data?.login) return
-    setLoading(true)
+    if (form.identifier || form.password || data?.login) {
+      setLoading(true)
+    }
     try {
-      await data.login(form.identifier, form.password)
+      await data?.login(form.identifier, form.password)
     } finally {
       setLoading(false)
     }
@@ -53,8 +54,9 @@ export function LoginForm({
             id="identifier"
             name="identifier"
             type="text"
+            autoCapitalize="none"
+            autoCorrect="off"
             autoComplete="username"
-            placeholder="user@provider.com"
             required
             value={form.identifier}
             onChange={(e) =>
@@ -78,7 +80,11 @@ export function LoginForm({
             }
           />
         </Field>
-        <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
+        <Button
+          type="submit"
+          className="w-full cursor-pointer"
+          disabled={loading}
+        >
           {loading ? "Logging in…" : "Login"}
         </Button>
       </div>
