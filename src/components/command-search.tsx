@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Search, Shield, type LucideIcon } from "lucide-react"
 
@@ -29,22 +30,17 @@ interface CommandSearchProps {
   onOpenChange: (open: boolean) => void
 }
 
-const RECENT_PASSWORD_LIMIT = 3
-
 export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
   const navigate = useNavigate()
+  const [query, setQuery] = useState("")
 
-  const recentPasswords = data.slice(-RECENT_PASSWORD_LIMIT)
-
-  const allItems: SearchItem[] = [
-    ...recentPasswords.map((p) => ({
-      title: p.name,
-      description: p.username,
-      url: "/main/passwords",
-      group: "Passwords",
-      icon: Shield,
-    })),
-  ]
+  const allItems: SearchItem[] = data.map((p) => ({
+    title: p.name,
+    description: p.username,
+    url: "/main/passwords",
+    group: "Passwords",
+    icon: Shield,
+  }))
 
   const groupedItems = allItems.reduce(
     (acc, item) => {
@@ -69,33 +65,42 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
       className="sm:max-w-[640px]"
     >
       <Command>
-        <CommandInput placeholder="Type secrets here..." autoFocus />
+        <CommandInput
+          placeholder="Type secrets here..."
+          autoFocus
+          onValueChange={setQuery}
+        />
         <CommandList className="max-h-[400px]">
-          <CommandEmpty>No results found.</CommandEmpty>
-          {Object.entries(groupedItems).map(([group, items]) => (
-            <CommandGroup key={group} heading={group}>
-              {items.map((item, i) => {
-                const Icon = item.icon
-                return (
-                  <CommandItem
-                    key={`${item.url}-${i}`}
-                    value={`${item.title} ${item.description ?? ""}`}
-                    onSelect={() => handleSelect(item.url)}
-                  >
-                    {Icon && <Icon />}
-                    <div className="flex flex-col">
-                      <span>{item.title}</span>
-                      {item.description && (
-                        <span className="text-xs text-muted-foreground">
-                          {item.description}
-                        </span>
-                      )}
-                    </div>
-                  </CommandItem>
-                )
-              })}
-            </CommandGroup>
-          ))}
+          {query ? (
+            <CommandEmpty>No results found :(</CommandEmpty>
+          ) : (
+            <CommandEmpty>Input is empty :(</CommandEmpty>
+          )}
+          {query &&
+            Object.entries(groupedItems).map(([group, items]) => (
+              <CommandGroup key={group} heading={group}>
+                {items.map((item, i) => {
+                  const Icon = item.icon
+                  return (
+                    <CommandItem
+                      key={`${item.url}-${i}`}
+                      value={`${item.title} ${item.description ?? ""}`}
+                      onSelect={() => handleSelect(item.url)}
+                    >
+                      {Icon && <Icon />}
+                      <div className="flex flex-col">
+                        <span>{item.title}</span>
+                        {item.description && (
+                          <span className="text-xs text-muted-foreground">
+                            {item.description}
+                          </span>
+                        )}
+                      </div>
+                    </CommandItem>
+                  )
+                })}
+              </CommandGroup>
+            ))}
         </CommandList>
       </Command>
     </CommandDialog>

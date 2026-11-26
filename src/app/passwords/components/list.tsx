@@ -3,6 +3,7 @@ import {
   ItemContent,
   ItemTitle,
   ItemDescription,
+  ItemLogo,
 } from "@/components/ui/item"
 
 export default function List(props: {
@@ -19,6 +20,7 @@ export default function List(props: {
       }}
     >
       <Item variant="default">
+        <ItemLogo url={d.logo} />
         <ItemContent>
           <ItemTitle>{d.name ?? "-"}</ItemTitle>
           <ItemDescription>{d.username ?? "-"}</ItemDescription>

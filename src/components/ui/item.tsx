@@ -125,6 +125,14 @@ function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+function ItemLogo({ url }: { url: string }) {
+  return (
+    <div data-slot="item-logo">
+      <img src={url} width={20} />
+    </div>
+  )
+}
+
 function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -193,6 +201,7 @@ export {
   ItemContent,
   ItemActions,
   ItemGroup,
+  ItemLogo,
   ItemSeparator,
   ItemTitle,
   ItemDescription,
