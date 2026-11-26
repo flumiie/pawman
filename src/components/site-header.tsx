@@ -6,8 +6,10 @@ import { CommandSearch, SearchTrigger } from "@/components/command-search"
 import { getAppUrl } from "@/lib/utils"
 import { SidebarTrigger } from "./ui/sidebar"
 import { Separator } from "./ui/separator"
+import { useTheme } from "@/hooks/use-theme"
 
 export function SiteHeader() {
+  const { theme } = useTheme()
   const [searchOpen, setSearchOpen] = React.useState(false)
 
   React.useEffect(() => {
@@ -27,7 +29,11 @@ export function SiteHeader() {
       <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height) sticky top-0">
         <div
           className="flex w-full items-center gap-1 px-4 py-3 lg:gap-2 lg:px-6"
-          style={{ backgroundColor: "#0a0a0a", borderRadius: 16, height: 55 }}
+          style={{
+            backgroundColor: theme === "dark" ? "#0a0a0a" : "#fff",
+            borderRadius: 16,
+            height: 55,
+          }}
         >
           <SidebarTrigger className="-ml-1" />
           <Separator
