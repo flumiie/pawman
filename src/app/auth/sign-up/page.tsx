@@ -8,12 +8,12 @@ export default function SignUp2Page() {
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="/" className="flex items-center gap-2 font-medium">
             <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
-              <Logo size={24} />
+              <Logo size={32} />
             </div>
-            ShadcnStore
+            PawMan
           </a>
         </div>
-        <div className="flex flex-1 items-center justify-center">
+        <div className="flex items-center justify-center">
           <div className="w-full max-w-md">
             <SignupForm />
           </div>

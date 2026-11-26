@@ -10,10 +10,10 @@ export interface UserInfo {
 export const registerUser = (
   identifier: string,
   password: string,
-  first_name: string,
-  last_name: string,
+  firstName: string,
+  lastName: string,
 ): Promise<boolean> =>
-  invoke<boolean>("register_user", { identifier, password, first_name, last_name })
+  invoke<boolean>("register_user", { identifier, password, firstName, lastName })
 
 export const loginUser = (identifier: string, password: string): Promise<boolean> =>
   invoke<boolean>("login_user", { identifier, password })

@@ -1,5 +1,6 @@
 import { ProtectedRoute } from "@/components/protected-route"
 import { RootRedirect } from "@/components/root-redirect"
+import ErrorPage from "@/app/errors/general/page"
 import type { ComponentType } from "react"
 import { type RouteObject } from "react-router-dom"
 
@@ -15,6 +16,12 @@ function page(load: () => Promise<{ default: ComponentType }>) {
 export const routes: RouteObject[] = [
   {
     path: "/",
+    errorElement: (
+      <ErrorPage
+        title="App Error"
+        description="We couldn't load the application."
+      />
+    ),
     children: [
       { index: true, Component: RootRedirect },
       { path: "login", lazy: page(() => import("@/app/auth/login/page")) },
@@ -24,11 +31,24 @@ export const routes: RouteObject[] = [
   {
     element: <ProtectedRoute />,
     path: "main",
-    children: [
-      { path: "passwords", lazy: page(() => import("@/app/passwords/page")) },
-    ],
+    errorElement: (
+      <ErrorPage
+        title="App Crash"
+        description="Please restart the app to continue."
+      />
+    ),
+    children: [{ path: "/", lazy: page(() => import("@/app/passwords/page")) }],
   },
 
   // Catch-all route for 404
-  { path: "*", lazy: page(() => import("@/app/errors/not-found/page")) },
+  {
+    path: "*",
+    errorElement: (
+      <ErrorPage
+        title="Page Not Found"
+        description="The page you're looking for doesn't exist."
+      />
+    ),
+    lazy: page(() => import("@/app/errors/not-found/page")),
+  },
 ]

@@ -1,6 +1,7 @@
 import { Outlet, useNavigation } from "react-router-dom"
 
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
+import { ErrorBoundary } from "@/components/error-boundary"
 
 /** Thin top bar shown while the next route's code is loading. */
 function RouteProgress() {
@@ -20,7 +21,9 @@ export function RootLayout() {
   return (
     <>
       {navigation.state === "loading" && <RouteProgress />}
-      <Outlet />
+      <ErrorBoundary>
+        <Outlet />
+      </ErrorBoundary>
     </>
   )
 }
