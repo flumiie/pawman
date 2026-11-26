@@ -1,36 +1,24 @@
 "use client"
 
 import { useNavigate } from "react-router-dom"
-import {
-  Search,
-  LayoutDashboard,
-  Shield,
-  AlertTriangle,
-  Settings,
-  HelpCircle,
-  CreditCard,
-  User,
-  Bell,
-  Link2,
-  Palette,
-  type LucideIcon,
-  SettingsIcon,
-} from "lucide-react"
+import { Search, Shield, type LucideIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandDialog,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
+  CommandGroup,
 } from "@/components/ui/command"
 import { Kbd } from "@/components/ui/kbd"
+import { data } from "@/data/passwords"
 
 interface SearchItem {
   title: string
+  description: string
   url: string
   group: string
   icon?: LucideIcon
@@ -41,124 +29,26 @@ interface CommandSearchProps {
   onOpenChange: (open: boolean) => void
 }
 
+const RECENT_PASSWORD_LIMIT = 3
+
 export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
   const navigate = useNavigate()
 
-  const searchItems: SearchItem[] = [
-    // Dashboards
-    {
-      title: "Passwords",
-      url: "/",
-      group: "",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "Settings",
-      url: "/settings/user",
-      group: "",
-      icon: SettingsIcon,
-    },
+  const recentPasswords = data.slice(-RECENT_PASSWORD_LIMIT)
 
-    // Auth Pages
-    {
-      title: "Sign In",
-      url: "/login",
-      group: "Auth Pages",
+  const allItems: SearchItem[] = [
+    ...recentPasswords.map((p) => ({
+      title: p.name,
+      description: p.username,
+      url: "/main/passwords",
+      group: "Passwords",
       icon: Shield,
-    },
-    {
-      title: "Sign Up",
-      url: "/auth/sign-up",
-      group: "Auth Pages",
-      icon: Shield,
-    },
-    {
-      title: "Forgot Password",
-      url: "/auth/forgot-password",
-      group: "Auth Pages",
-      icon: Shield,
-    },
-
-    // Errors
-    {
-      title: "Unauthorized",
-      url: "/errors/unauthorized",
-      group: "Errors",
-      icon: AlertTriangle,
-    },
-    {
-      title: "Forbidden",
-      url: "/errors/forbidden",
-      group: "Errors",
-      icon: AlertTriangle,
-    },
-    {
-      title: "Not Found",
-      url: "/errors/not-found",
-      group: "Errors",
-      icon: AlertTriangle,
-    },
-    {
-      title: "Internal Server Error",
-      url: "/errors/internal-server-error",
-      group: "Errors",
-      icon: AlertTriangle,
-    },
-    {
-      title: "Under Maintenance",
-      url: "/errors/under-maintenance",
-      group: "Errors",
-      icon: AlertTriangle,
-    },
-
-    // Settings
-    {
-      title: "User Settings",
-      url: "/settings/user",
-      group: "Settings",
-      icon: User,
-    },
-    {
-      title: "Account Settings",
-      url: "/settings/account",
-      group: "Settings",
-      icon: Settings,
-    },
-    {
-      title: "Plans & Billing",
-      url: "/settings/billing",
-      group: "Settings",
-      icon: CreditCard,
-    },
-    {
-      title: "Appearance",
-      url: "/settings/appearance",
-      group: "Settings",
-      icon: Palette,
-    },
-    {
-      title: "Notifications",
-      url: "/settings/notifications",
-      group: "Settings",
-      icon: Bell,
-    },
-    {
-      title: "Connections",
-      url: "/settings/connections",
-      group: "Settings",
-      icon: Link2,
-    },
-
-    // Pages
-    { title: "FAQs", url: "/faqs", group: "Pages", icon: HelpCircle },
-    { title: "Pricing", url: "/pricing", group: "Pages", icon: CreditCard },
+    })),
   ]
 
-  const groupedItems = searchItems.reduce(
+  const groupedItems = allItems.reduce(
     (acc, item) => {
-      if (!acc[item.group]) {
-        acc[item.group] = []
-      }
+      if (!acc[item.group]) acc[item.group] = []
       acc[item.group].push(item)
       return acc
     },
@@ -175,25 +65,32 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
       open={open}
       onOpenChange={onOpenChange}
       title="Command Search"
-      description="Search pages and settings"
+      description="Search secrets"
       className="sm:max-w-[640px]"
     >
       <Command>
-        <CommandInput placeholder="What do you need?" autoFocus />
+        <CommandInput placeholder="Type secrets here..." autoFocus />
         <CommandList className="max-h-[400px]">
           <CommandEmpty>No results found.</CommandEmpty>
           {Object.entries(groupedItems).map(([group, items]) => (
             <CommandGroup key={group} heading={group}>
-              {items.map((item) => {
+              {items.map((item, i) => {
                 const Icon = item.icon
                 return (
                   <CommandItem
-                    key={item.url}
-                    value={item.title}
+                    key={`${item.url}-${i}`}
+                    value={`${item.title} ${item.description ?? ""}`}
                     onSelect={() => handleSelect(item.url)}
                   >
                     {Icon && <Icon />}
-                    {item.title}
+                    <div className="flex flex-col">
+                      <span>{item.title}</span>
+                      {item.description && (
+                        <span className="text-xs text-muted-foreground">
+                          {item.description}
+                        </span>
+                      )}
+                    </div>
                   </CommandItem>
                 )
               })}
