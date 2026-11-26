@@ -1,4 +1,3 @@
-import { ProtectedLayout } from "@/app/protected-layout/page"
 import { ProtectedRoute } from "@/components/protected-route"
 import { RootRedirect } from "@/components/root-redirect"
 import type { ComponentType } from "react"
@@ -25,7 +24,6 @@ export const routes: RouteObject[] = [
   {
     element: <ProtectedRoute />,
     path: "main",
-    Component: ProtectedLayout,
     children: [
       { path: "passwords", lazy: page(() => import("@/app/passwords/page")) },
     ],

@@ -47,7 +47,7 @@ export function SignupForm({
 
     setLoading(true)
     try {
-      const ok = await registerUser(form.identifier, form.password)
+      const ok = await registerUser(form.identifier, form.password, form.firstName, form.lastName)
       if (ok) {
         navigate("/login")
       } else {

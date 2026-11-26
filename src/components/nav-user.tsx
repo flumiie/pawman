@@ -25,6 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { useAuth } from "@/hooks/use-auth"
 
 export function NavUser({
   user,
@@ -35,6 +36,7 @@ export function NavUser({
     avatar: string
   }
 }) {
+  const auth = useAuth()
   const { isMobile } = useSidebar()
 
   return (
@@ -109,7 +111,9 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem
                 className="cursor-pointer"
-                render={<Link to="/sign-in" />}
+                onClick={() => {
+                  auth?.logout()
+                }}
               >
                 <LogOut />
                 Log out

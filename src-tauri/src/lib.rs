@@ -21,6 +21,18 @@ struct UserStore {
 struct UserRecord {
     identifier: String, // email or username, always stored lowercase
     password_hash: String, // full argon2 hash string
+    #[serde(default)]
+    first_name: String,
+    #[serde(default)]
+    last_name: String,
+}
+
+/// Public user info returned to the frontend (no secrets).
+#[derive(Serialize, Deserialize, Clone)]
+pub struct UserInfo {
+    pub identifier: String,
+    pub first_name: String,
+    pub last_name: String,
 }
 
 struct AppState {
@@ -80,6 +92,8 @@ fn save_store(path: &std::path::Path, store: &UserStore) -> Result<(), String> {
 fn register_user(
     identifier: String,
     password: String,
+    first_name: String,
+    last_name: String,
     state: State<'_, AppState>,
 ) -> Result<bool, String> {
     let identifier = identifier.trim().to_lowercase();
@@ -101,6 +115,8 @@ fn register_user(
         store.users.push(UserRecord {
             identifier: identifier.clone(),
             password_hash: hash,
+            first_name: first_name.trim().to_string(),
+            last_name: last_name.trim().to_string(),
         });
     }
 
@@ -142,6 +158,22 @@ fn login_user(
 #[tauri::command]
 fn clear_session(_state: State<'_, AppState>) {}
 
+/// Look up public user info by identifier. Returns None when not found.
+#[tauri::command]
+fn get_user(identifier: String, state: State<'_, AppState>) -> Result<Option<UserInfo>, String> {
+    let identifier = identifier.trim().to_lowercase();
+    let store = state.store.lock().unwrap();
+    Ok(store
+        .users
+        .iter()
+        .find(|u| u.identifier == identifier)
+        .map(|u| UserInfo {
+            identifier: u.identifier.clone(),
+            first_name: u.first_name.clone(),
+            last_name: u.last_name.clone(),
+        }))
+}
+
 // ---------------------------------------------------------------------------
 // App entry point
 // ---------------------------------------------------------------------------
@@ -158,6 +190,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             register_user,
             login_user,
+            get_user,
             clear_session,
         ])
         .run(tauri::generate_context!())

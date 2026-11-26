@@ -22,9 +22,8 @@ export function LoginForm({
   const [loading, setLoading] = useState(false)
 
   const handleLogin = async () => {
-    if (form.identifier || form.password || data?.login) {
-      setLoading(true)
-    }
+    if (!form.identifier || !form.password || !data?.login) return
+    setLoading(true)
     try {
       await data?.login(form.identifier, form.password)
     } finally {

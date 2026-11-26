@@ -13,7 +13,7 @@ export function assetUrl(path: string): string {
 
 /**
  * Get the correct URL path with basename prefix for internal navigation
- * @param path - The internal path (e.g., "/passwords", "/login")
+ * @param path - The internal path (e.g., "/main/passwords", "/login")
  * @returns The full path with basename prefix
  */
 export function getAppUrl(path: string): string {

@@ -153,7 +153,7 @@ export function LandingNavbar() {
             nativeButton={false}
             render={
               <a
-                href={getAppUrl("/passwords")}
+                href={getAppUrl("/main/passwords")}
                 target="_blank"
                 rel="noopener noreferrer"
               />
@@ -203,7 +203,7 @@ export function LandingNavbar() {
                     <Logo size={16} />
                   </div>
                   <SheetTitle className="text-lg font-semibold">
-                    ShadcnStore
+                    PawMan
                   </SheetTitle>
                   <div className="ml-auto flex items-center gap-2">
                     <Button
@@ -330,7 +330,7 @@ export function LandingNavbar() {
                     size="lg"
                     className="w-full cursor-pointer"
                     nativeButton={false}
-                    render={<a href={getAppUrl("/passwords")} />}
+                    render={<a href={getAppUrl("/main/passwords")} />}
                   >
                     <LayoutDashboard data-icon="inline-start" />
                     Dashboard

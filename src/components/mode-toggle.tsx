@@ -39,14 +39,15 @@ export function ModeToggle({ variant = "outline" }: ModeToggleProps) {
     return () => mediaQuery.removeEventListener("change", updateMode)
   }, [theme])
 
-  const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
-    toggleTheme(event)
+  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    toggleTheme(e)
   }
 
   return (
     <Button
       variant={variant}
-      size="icon"
+      size="sm"
       onClick={handleToggle}
       className="cursor-pointer mode-toggle-button relative overflow-hidden"
     >
